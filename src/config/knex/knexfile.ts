@@ -1,6 +1,11 @@
 import env from "#config/env/env.js";
-import { Knex } from "knex";
+import type { Knex } from "knex";
 import { z } from "zod";
+import * as path from "node:path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const connectionSchema = z.object({
     host: z.string(),
@@ -28,14 +33,14 @@ const knegConfigs: Record<typeof NODE_ENV, Knex.Config> = {
             max: 10,
         },
         migrations: {
-            stub: 'src/config/knex/migration.stub.js',
-            directory: "./src/postgres/migrations",
+            stub: path.join(__dirname, '../knex/migration.stub.js'), // Изменено
+            directory: path.join(__dirname, '../../postgres/migrations'), // Изменено
             tableName: "migrations",
-            extension: "ts",
+            extension: "js", // Изменено на js для скомпилированных файлов
         },
         seeds: {
-            stub: 'src/config/knex/seed.stub.js',
-            directory: "./src/postgres/seeds",
+            stub: path.join(__dirname, '../knex/seed.stub.js'), // Изменено
+            directory: path.join(__dirname, '../../postgres/seeds'), // Изменено
             extension: "js",
         },
     },
@@ -54,14 +59,14 @@ const knegConfigs: Record<typeof NODE_ENV, Knex.Config> = {
             max: 10,
         },
         migrations: {
-            stub: 'dist/config/knex/migration.stub.js',
-            directory: "./dist/postgres/migrations",
+            stub: path.join(__dirname, '../knex/migration.stub.js'),
+            directory: path.join(__dirname, '../../postgres/migrations'),
             tableName: "migrations",
             extension: "js",
         },
         seeds: {
-            stub: 'src/config/knex/seed.stub.js',
-            directory: "./dist/postgres/seeds",
+            stub: path.join(__dirname, '../knex/seed.stub.js'),
+            directory: path.join(__dirname, '../../postgres/seeds'),
             extension: "js",
         },
     },
