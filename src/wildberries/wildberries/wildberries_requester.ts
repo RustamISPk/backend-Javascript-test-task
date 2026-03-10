@@ -1,4 +1,4 @@
-import {RequesterInterface} from "#requester/interfaces/requester_interface.js";
+import {RequesterInterface} from "#wildberries/interfaces/requester_interface.js";
 import env from "#config/env/env.js";
 
 export class WildberriesRequester implements RequesterInterface{
